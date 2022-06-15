@@ -13,7 +13,7 @@
 // }
 
 const Pool = require("pg").Pool;
-require(".env").config();
+require("dotenv").config();
 
 const isProduction = process.env.NODE_ENV === "production";
 
@@ -21,8 +21,7 @@ const connectionString = `postgresql://${process.env.PG_USER}:${process.env.PG_P
 
 const pool = new Pool({
     connectionString: isProduction ? process.env.DATABASE_URL : connectionString,
-    ssl: {
-        rejectUnauthorized: false,
-    },
+    ssl: isProduction,
 });
-module.exports = pool;
+
+module.exports = {pool}
